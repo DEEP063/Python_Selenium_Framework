@@ -45,10 +45,10 @@ def browser(request):
 #     config.addinivalue_line('markers', 'ModuleName: Register')
 #     config.addinivalue_line('markers', 'Tester: Deepak')
 
-def pytest_configure(config):
-    config._metadata['Project Name'] = 'Automation Exercise'
-    config._metadata['Module Name'] = 'Register'
-    config._metadata['Tester'] = 'Deepak'
+# def pytest_configure(config):
+#     config._metadata['Project Name'] = 'Automation Exercise'
+#     config._metadata['Module Name'] = 'Register'
+#     config._metadata['Tester'] = 'Deepak'
 
 
 @pytest.mark.optionalhook
