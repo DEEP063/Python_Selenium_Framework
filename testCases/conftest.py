@@ -46,11 +46,17 @@ def browser(request):
 #     config.addinivalue_line('markers', 'Tester: Deepak')
 
 # def pytest_configure(config):
+#     config._metadata
 #     config._metadata['Project Name'] = 'Automation Exercise'
 #     config._metadata['Module Name'] = 'Register'
 #     config._metadata['Tester'] = 'Deepak'
 
-
+# def pytest_configure(config):
+#     config._metadata = {
+#         "Tester": "Deepak",
+#         "Project Name": "Hybrid Framework ",
+#     }
+#
 @pytest.mark.optionalhook
 def pytest_metadata(metadata):
     metadata.pop("JAVA_HOME", None)
