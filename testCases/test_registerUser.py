@@ -18,30 +18,32 @@ class Test_RegisterUser(BaseTest):
     email = ReadConfig.getUseremail()
     password = ReadConfig.getPassword()
 
+    @pytest.mark.sanity
+    def test_register_a_new_user(self,setup):
+        self.driver= setup
+        self.hp = HomePage(self.driver)
+        self.hp.navigateToPage(self.baseUrl)
+        time.sleep(1)
+        self.hp.clickOnTitle()
+        time.sleep(1)
+        self.hp.clickOnLink('products')
+        time.sleep(2)
+
+        actual_url = self.hp.getUrl()
+        print()
+        expected_url = "https://automationexercise.com/login"
+        assert expected_url == actual_url,f"{actual_url} url is not correct"
 
 
-    # def test_register_a_new_user(self,setup):
-    #     self.driver= setup
-    #     self.hp = HomePage(self.driver)
-        # self.hp.navigateToPage()
-        # time.sleep(1)
-        # self.hp.clickOnTitle()
-        # time.sleep(1)
-        # self.hp.clickOnLink()
-        # time.sleep(2)
-        #
-        # actual_url = self.hp.getUrl()
-        # print()
-        #
-        # assert expected_url == actual_url,f"{actual_url} usrl is not correct"
-
-    def test_login_user(self, setup):
+    def test_login_user_only(self, setup):
 
         self.logger.info("*********************Started**************************")
         self.logger.info("*********************test_login_user**************************")
         self.driver = setup
         self.hp = HomePage(self.driver)
         self.sp = SignUp_LoginPage(self.driver)
+
+        print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
         self.hp.navigateToPage(self.baseUrl)
         time.sleep(2)
         self.hp.clickOnLink()
