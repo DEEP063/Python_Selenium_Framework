@@ -3,30 +3,53 @@ import time
 import pytest
 from selenium import webdriver
 from pageObjects.homePage import HomePage
+from pageObjects.SignUp_LoginPage import SignUp_LoginPage
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from testCases.BaseTest import BaseTest
+from utilities.readProperties import ReadConfig
 
 
-class Test_RegisterUser:
+class Test_RegisterUser(BaseTest):
+    baseUrl = ReadConfig.getApplicationUrl()
+    email = ReadConfig.getUseremail()
+    password = ReadConfig.getPassword()
 
-    def test_register_a_new_user(self,setup):
-        self.driver= setup
-        expected_url = "5https://automationexercise.com/view_cart"
 
+
+    # def test_register_a_new_user(self,setup):
+    #     self.driver= setup
+    #     self.hp = HomePage(self.driver)
+        # self.hp.navigateToPage()
+        # time.sleep(1)
+        # self.hp.clickOnTitle()
+        # time.sleep(1)
+        # self.hp.clickOnLink()
+        # time.sleep(2)
+        #
+        # actual_url = self.hp.getUrl()
+        # print()
+        #
+        # assert expected_url == actual_url,f"{actual_url} usrl is not correct"
+
+    def test_login_user(self, setup):
+
+        self.logger.info("*********************Started**************************")
+        self.logger.info("*********************test_login_user**************************")
+        self.driver = setup
         self.hp = HomePage(self.driver)
-
-        self.hp.navigateToPage()
-        time.sleep(1)
-        self.hp.clickOnTitle()
-        time.sleep(1)
-        self.hp.clickOnLink()
+        self.sp = SignUp_LoginPage(self.driver)
+        self.hp.navigateToPage(self.baseUrl)
         time.sleep(2)
+        self.hp.clickOnLink()
+        time.sleep(3)
+        self.sp.enterEmail(self.email)
+        self.sp.enterPassword(self.password)
+        self.sp.clickOnLoginButton()
+        time.sleep(4)
 
-        actual_url = self.hp.getUrl()
-        print()
-
-        assert expected_url == actual_url,f"{actual_url} usrl is not correct"
-
+        self.logger.info("*********************End**************************")
+        self.logger.info("*********************TestEnd**************************")

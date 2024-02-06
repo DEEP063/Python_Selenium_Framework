@@ -2,23 +2,56 @@ from selenium import webdriver
 
 import pytest
 
+import pytest
+from selenium import webdriver
+import os
+
 
 @pytest.fixture()
-def setup():
-    driver = webdriver.Chrome()
+def setup(browser):
+    browser_mapping = {
+        "chrome": webdriver.Chrome,
+        "firefox": webdriver.Firefox,
+        "edge": webdriver.Edge,
+    }
+
+    if browser in browser_mapping:
+        driver = browser_mapping[browser]()
+    else:
+        raise ValueError(f"Unsupported browser: {browser}")
+
     driver.maximize_window()
-    return driver
+    yield driver
+    driver.quit()
 
 
-# Fixture to capture screenshots on test failure
-@pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_protocol(item):
-    outcome = yield
-    rep = outcome.get_result()
+def pytest_addoption(parser):
+    parser.addoption("--browser")
 
-    if rep.failed:
-        # If the test failed, capture a screenshot
-        driver = item.cls.driver  # Assuming your driver is stored in the 'driver' attribute of the test class
-        screenshot_path = f"Screenshots/{item.name}_failure.png"
-        driver.save_screenshot(screenshot_path)
-        print(f"Screenshot saved: {screenshot_path}")
+
+@pytest.fixture()
+def browser(request):
+    return request.config.getoption("--browser")
+
+
+# def pytest_configure(config):
+#     metadata = config.get_metadata("line")
+#     metadata["Project Name"] = "Automation Exercise"
+#     metadata["Module Name"] = "Register"
+#     metadata["Tester"] = "Deepak"
+
+# def pytest_configure(config):
+#     config.addinivalue_line('markers', 'ProjectName: Automation Exercise')
+#     config.addinivalue_line('markers', 'ModuleName: Register')
+#     config.addinivalue_line('markers', 'Tester: Deepak')
+
+def pytest_configure(config):
+    config._metadata['Project Name'] = 'Automation Exercise'
+    config._metadata['Module Name'] = 'Register'
+    config._metadata['Tester'] = 'Deepak'
+
+
+@pytest.mark.optionalhook
+def pytest_metadata(metadata):
+    metadata.pop("JAVA_HOME", None)
+    metadata.pop("Plugins", None)
