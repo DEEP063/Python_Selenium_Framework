@@ -21,6 +21,7 @@ class Test_registerUser_excel_ddt(BaseTest):
     baseUrl = ReadConfig.getApplicationUrl()
     path = "C:\\Users\\SAI-PC\\Desktop\\pythonProject001\\TestData\\Book2.xlsx"
 
+#this generate random string
     def random_string(self,length):
         """
         Generate a random string of specified length.
