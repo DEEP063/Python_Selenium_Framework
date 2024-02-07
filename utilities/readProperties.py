@@ -4,7 +4,7 @@ import os
 config = configparser.RawConfigParser()
 # config.read(f"{os.getcwd()}\\Configuraions\\config.ini")
 # config.read(".\\Configuraions\\config.ini")
-config.read("C:\\Users\\SAI-PC\\Desktop\\pythonProject001\\Configurations\\config.ini")
+config.read(f"{os.getcwd()}\\Configurations\\config.ini")
 
 
 class ReadConfig:
