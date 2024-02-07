@@ -1,6 +1,8 @@
 import time
 
+import allure
 import pytest
+from allure_commons.types import AttachmentType
 from selenium import webdriver
 from pageObjects.homePage import HomePage
 from pageObjects.SignUp_LoginPage import SignUp_LoginPage
@@ -13,11 +15,13 @@ from testCases.BaseTest import BaseTest
 from utilities.readProperties import ReadConfig
 
 
+@allure.severity(allure.severity_level.NORMAL)
 class Test_RegisterUser(BaseTest):
     baseUrl = ReadConfig.getApplicationUrl()
     email = ReadConfig.getUseremail()
     password = ReadConfig.getPassword()
 
+    @allure.severity(allure.severity_level.MINOR)
     @pytest.mark.sanity
     def test_register_a_new_user(self,setup):
         self.driver= setup
@@ -32,8 +36,10 @@ class Test_RegisterUser(BaseTest):
         actual_url = self.hp.getUrl()
         print()
         expected_url = "https://automationexercise.com/login"
-        assert expected_url == actual_url,f"{actual_url} url is not correct"
-
+        # assert expected_url == actual_url,f"{actual_url} url is not correct"
+        if(expected_url != actual_url):
+            allure.attach(self.driver.get_screenshot_as_png(),name="abcd",attachment_type=AttachmentType.PNG)
+            assert False
 
     def test_login_user_only(self, setup):
 
