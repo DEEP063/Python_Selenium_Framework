@@ -13,13 +13,13 @@ from selenium.webdriver.support.wait import WebDriverWait
 from testCases.BaseTest import BaseTest
 from utilities.readProperties import ReadConfig
 from utilities import XUtils
-
+import os
 import random
 import string
 
 class Test_registerUser_excel_ddt(BaseTest):
     baseUrl = ReadConfig.getApplicationUrl()
-    path = "C:\\Users\\SAI-PC\\Desktop\\pythonProject001\\TestData\\Book2.xlsx"
+    path = f"{os.getcwd()}\\TestData\\Book2.xlsx"
 
     def random_string(self,length):
         """
