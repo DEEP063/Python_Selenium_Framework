@@ -4,3 +4,4 @@ pytest-html
 pytest-xdist
 Openpyxl
 Allure-pytest
+pytest-rerunfailures
