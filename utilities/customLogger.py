@@ -5,6 +5,8 @@ from datetime import datetime
 class LogGen:
     @staticmethod
     def loggen():
+        # Create 'logs' folder if it doesn't exist
+        LogGen.create_logs_folder()
         # Delete log files before initializing the logger
         LogGen.delete_old_logs()
 
@@ -27,6 +29,12 @@ class LogGen:
                     os.unlink(file_path)
             except Exception as e:
                 print(f"Error deleting {file_path}: {e}")
+
+    @staticmethod
+    def create_logs_folder():
+        log_folder = 'logs'
+        if not os.path.exists(log_folder):
+            os.makedirs(log_folder)
 
 if __name__ == "__main__":
     # Example of usage
