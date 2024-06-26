@@ -1,10 +1,6 @@
-from selenium import webdriver
-
-import pytest
-
 import pytest
 from selenium import webdriver
-import os
+from utilities.readProperties import load_yaml_file
 
 
 @pytest.fixture()
@@ -61,3 +57,18 @@ def browser(request):
 def pytest_metadata(metadata):
     metadata.pop("JAVA_HOME", None)
     metadata.pop("Plugins", None)
+
+
+# FOR YAML ONLY
+@pytest.fixture(scope="session")
+def config():
+    return load_yaml_file("/home/deepak/Desktop/V_P/Python_Selenium_Framework/Configurations/config.yaml")
+
+
+@pytest.fixture(scope="module")
+def load_common_info(config):
+    return {
+        "baseurl": config["baseURL"],
+        "email": config["email"],
+        "password": config["password"]
+    }
