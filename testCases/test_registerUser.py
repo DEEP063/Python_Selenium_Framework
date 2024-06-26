@@ -10,21 +10,28 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
 from testCases.BaseTest import BaseTest
 from utilities.readProperties import ReadConfig
 
 
 @allure.severity(allure.severity_level.NORMAL)
+@pytest.mark.usefixtures("load_common_info")
 class Test_RegisterUser(BaseTest):
-    baseUrl = ReadConfig.getApplicationUrl()
-    email = ReadConfig.getUseremail()
-    password = ReadConfig.getPassword()
+    # baseUrl = ReadConfig.getApplicationUrl()
+    # email = ReadConfig.getUseremail()
+    # password = ReadConfig.getPassword()
+
+    @pytest.fixture(autouse=True)
+    def class_setup(self, load_common_info):
+        self.baseUrl = load_common_info["baseurl"]
+        self.email = load_common_info["email"]
+        self.password = load_common_info["password"]
+
 
     @allure.severity(allure.severity_level.MINOR)
     @pytest.mark.sanity
-    def test_register_a_new_user(self,setup):
-        self.driver= setup
+    def test_register_a_new_user(self, setup):
+        self.driver = setup
         self.hp = HomePage(self.driver)
         self.hp.navigateToPage(self.baseUrl)
         time.sleep(1)
@@ -37,12 +44,11 @@ class Test_RegisterUser(BaseTest):
         print()
         expected_url = "https://automationexercise.com/login"
         # assert expected_url == actual_url,f"{actual_url} url is not correct"
-        if(expected_url != actual_url):
-            allure.attach(self.driver.get_screenshot_as_png(),name="abcd",attachment_type=AttachmentType.PNG)
+        if expected_url != actual_url:
+            allure.attach(self.driver.get_screenshot_as_png(), name="abcd", attachment_type=AttachmentType.PNG)
             assert False
 
     def test_login_user_only(self, setup):
-
         self.logger.info("*********************Started**************************")
         self.logger.info("*********************test_login_user**************************")
         self.driver = setup
