@@ -5,3 +5,4 @@ pytest-xdist
 Openpyxl
 Allure-pytest
 pytest-rerunfailures
+PyYAML
